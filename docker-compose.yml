@@ -1,0 +1,32 @@
+
+services:
+  myDB:
+    image: postgres:15.3
+    container_name: my-database
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: "Admin1234"
+      POSTGRES_DB: redes-db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  pgAdmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin4
+    restart: always
+    depends_on:
+      - myDB
+    ports:
+      - "8080:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: fedetrop23@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: "Admin1234"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  postgres_data:
+  pgadmin_data:
